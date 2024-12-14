@@ -17,7 +17,8 @@ export default [
       parser: tsParser,
       globals: {
         ...globals.browser,
-        React: 'readonly'
+        React: 'readonly',
+        JSX: 'readonly'
       },
       parserOptions: {
         ecmaFeatures: {
@@ -37,7 +38,17 @@ export default [
       'react-refresh/only-export-components': [
         'warn',
         { allowConstantExport: true }
-      ]
+      ],
+      '@typescript-eslint/no-unused-vars': ['warn'],
+      '@typescript-eslint/no-explicit-any': ['warn'],
+      '@typescript-eslint/explicit-function-return-type': 'off',
+      '@typescript-eslint/explicit-module-boundary-types': 'off',
+      '@typescript-eslint/no-non-null-assertion': 'off'
+    },
+    settings: {
+      react: {
+        version: 'detect'
+      }
     }
   }
 ];
