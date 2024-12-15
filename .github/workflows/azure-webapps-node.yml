@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_WEBAPP_NAME: Observapp
+  AZURE_WEBAPP_NAME: observvabilityapp1
   AZURE_WEBAPP_PACKAGE_PATH: 'dist'
   NODE_VERSION: '18.x'
 
