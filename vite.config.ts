@@ -9,5 +9,17 @@ export default defineConfig({
     outDir: 'dist',
     assetsDir: 'assets',
     emptyOutDir: true,
-  }
+    sourcemap: false,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'recharts'],
+        },
+      },
+    },
+  },
+  server: {
+    port: 3000,
+    strictPort: true,
+  },
 });

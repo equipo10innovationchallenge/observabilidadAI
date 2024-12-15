@@ -24,8 +24,12 @@ jobs:
 
       - name: npm install and build
         run: |
-          npm install
+          npm ci
           npm run build
+
+      - name: Add process.json
+        run: |
+          echo '{ "script": "serve", "env": { "PM2_SERVE_SPA": "true", "PM2_SERVE_HOMEPAGE": "/index.html" } }' > dist/process.json
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
@@ -35,3 +39,4 @@ jobs:
           publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
           package: ./dist
           respect-pom-xml: false
+          clean: true
