@@ -7,7 +7,6 @@ on:
 
 env:
   AZURE_WEBAPP_NAME: observvabilityapp1
-  AZURE_WEBAPP_PACKAGE_PATH: 'dist'
   NODE_VERSION: '18.x'
 
 jobs:
@@ -30,8 +29,10 @@ jobs:
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
-        uses: azure/webapps-deploy@v2
+        uses: azure/webapps-deploy@v3
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
-          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+          package: ./dist
+          slot-name: Production
+          respect-pom-xml: false
