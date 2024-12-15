@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ModelSelector } from './components/ModelSelector';
 import { MetricCard } from './components/MetricCard';
 import { AIInsights } from './components/AIInsights';
