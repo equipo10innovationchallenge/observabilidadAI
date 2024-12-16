@@ -20,48 +20,21 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-
-      - name: Cache node modules
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
 
       - name: Install dependencies
-        run: npm ci --prefer-offline --no-audit
+        run: npm ci
 
       - name: Build
-        run: npm run build --if-present
+        run: npm run build
 
-      - name: Prepare deployment
+      - name: Prepare dist
         run: |
           cp public/web.config dist/
-          echo '{ "scripts": { "start": "serve -s" } }' > dist/package.json
-          # Remove source maps to reduce package size
-          rm -f dist/assets/*.js.map
-          # Compress files
-          cd dist && zip -r ../deployment.zip ./*
+          cd dist && find . -type f -exec chmod 644 {} \;
 
-      - name: Deploy to Azure Web App
-        id: deploy-to-webapp
+      - name: Deploy to Azure
         uses: azure/webapps-deploy@v3
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
-          package: ./deployment.zip
-          clean: true
-          timeout-minutes: 30
-        env:
-          WEBSITE_RUN_FROM_PACKAGE: 1
-
-      - name: Handle deployment failure
-        if: failure() && steps.deploy-to-webapp.outcome == 'failure'
-        run: |
-          echo "Deployment failed. Checking Azure Web App status..."
-          echo "Please verify:"
-          echo "1. Azure Web App is running"
-          echo "2. Publish profile is valid"
-          echo "3. App Service plan has enough resources"
+          package: dist
