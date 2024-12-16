@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_WEBAPP_NAME: AppObservability
+  AZURE_WEBAPP_NAME: appobservability-gxa0gkg2gdgcdthu
   NODE_VERSION: '18.x'
 
 jobs:
