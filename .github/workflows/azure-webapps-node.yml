@@ -6,8 +6,8 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_WEBAPP_NAME: AppObservability
-  NODE_VERSION: '18.x'
+  AZURE_WEBAPP_NAME: AppObservabilidad
+  NODE_VERSION: '20.x'
 
 jobs:
   build-and-deploy:
