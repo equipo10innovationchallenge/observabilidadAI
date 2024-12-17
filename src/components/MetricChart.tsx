@@ -20,10 +20,14 @@ export function MetricChart({ data, color = '#3b82f6' }: MetricChartProps) {
     return `${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}`;
   };
 
+  const formatValue = (value: number) => {
+    return value.toFixed(2);
+  };
+
   return (
     <div className="h-32 mt-4">
       <ResponsiveContainer width="100%" height="100%">
-        <LineChart data={data}>
+        <LineChart data={data} margin={{ left: 10 }}>
           <XAxis
             dataKey="timestamp"
             tickFormatter={formatDate}
@@ -31,7 +35,12 @@ export function MetricChart({ data, color = '#3b82f6' }: MetricChartProps) {
             minTickGap={30}
             tick={{ fontSize: 10 }}
           />
-          <YAxis hide domain={['auto', 'auto']} />
+          <YAxis 
+            tickFormatter={formatValue}
+            width={40}
+            tick={{ fontSize: 10 }}
+            domain={['auto', 'auto']}
+          />
           <Tooltip
             labelFormatter={formatDate}
             formatter={(value: number) => [value.toFixed(3)]}

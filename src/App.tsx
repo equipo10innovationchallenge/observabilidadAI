@@ -27,6 +27,7 @@ function App() {
             value={selectedModel.metrics.precision * 100}
             unit="%"
             description="Accuracy of model predictions"
+            definition="Precision measures the proportion of positive identifications that were actually correct. A precision of 95% means that when the model predicts something as positive, it is correct 95% of the time."
             history={selectedModel.metrics.history.precision}
             color="#3b82f6"
           />
@@ -35,6 +36,7 @@ function App() {
             value={selectedModel.metrics.consistency * 100}
             unit="%"
             description="Stability of model outputs"
+            definition="Consistency evaluates how stable the model's outputs are when given similar inputs. Higher consistency indicates that the model produces similar results for similar queries, making it more reliable and predictable."
             history={selectedModel.metrics.history.consistency}
             color="#10b981"
           />
@@ -43,6 +45,7 @@ function App() {
             value={selectedModel.metrics.f1Score * 100}
             unit="%"
             description="Balanced measure of precision and recall"
+            definition="F1 Score is the harmonic mean of precision and recall, providing a single score that balances both metrics. It's particularly useful when you need a balanced measure of a model's accuracy, especially with imbalanced datasets."
             history={selectedModel.metrics.history.f1Score}
             color="#6366f1"
           />
@@ -51,6 +54,7 @@ function App() {
             value={selectedModel.metrics.relevance * 100}
             unit="%"
             description="Contextual accuracy of responses"
+            definition="Relevance measures how well the model's responses align with the context and intent of the input. It evaluates whether the outputs are not just accurate but also appropriate and useful for the given context."
             history={selectedModel.metrics.history.relevance}
             color="#8b5cf6"
           />
@@ -59,6 +63,7 @@ function App() {
             value={selectedModel.metrics.throughput}
             unit="req/s"
             description="Requests processed per second"
+            definition="Throughput represents the number of requests the model can process per second. This metric is crucial for understanding the model's processing capacity and scalability in production environments."
             history={selectedModel.metrics.history.throughput}
             color="#ec4899"
           />
@@ -67,6 +72,7 @@ function App() {
             value={selectedModel.metrics.latency}
             unit="ms"
             description="Average response time"
+            definition="Latency measures the average time taken to process a request and return a response. Lower latency indicates better real-time performance and user experience. This includes both model inference time and any additional processing overhead."
             history={selectedModel.metrics.history.latency}
             color="#f59e0b"
           />
