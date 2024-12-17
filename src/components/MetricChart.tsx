@@ -1,50 +1,40 @@
 import React from 'react';
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-} from 'recharts';
-import { TimeSeriesData } from '../types/metrics';
 
-interface MetricChartProps {
-  data: TimeSeriesData[];
-  color?: string;
+export interface TimeSeriesData {
+  timestamp: string;
+  value: number;
+  latency?: number;
+  throughput?: number;
 }
 
-export function MetricChart({ data, color = '#3b82f6' }: MetricChartProps) {
-  const formatDate = (timestamp: string) => {
-    const date = new Date(timestamp);
-    return `${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}`;
-  };
+export interface MetricChartProps {
+  data: TimeSeriesData[];
+  metrics: string[];
+}
 
+export const MetricChart: React.FC<MetricChartProps> = ({ data, metrics }) => {
+  // In a real application, you would use a charting library like Chart.js or Recharts
   return (
-    <div className="h-32 mt-4">
-      <ResponsiveContainer width="100%" height="100%">
-        <LineChart data={data}>
-          <XAxis
-            dataKey="timestamp"
-            tickFormatter={formatDate}
-            interval="preserveStartEnd"
-            minTickGap={30}
-            tick={{ fontSize: 10 }}
-          />
-          <YAxis hide domain={['auto', 'auto']} />
-          <Tooltip
-            labelFormatter={formatDate}
-            formatter={(value: number) => [value.toFixed(3)]}
-          />
-          <Line
-            type="monotone"
-            dataKey="value"
-            stroke={color}
-            dot={false}
-            strokeWidth={2}
-          />
-        </LineChart>
-      </ResponsiveContainer>
+    <div className="bg-white p-4 rounded-lg shadow">
+      <div className="h-64 flex items-center justify-center">
+        <div className="text-gray-500">
+          {data.length > 0 ? (
+            <div>
+              <h3 className="font-medium mb-2">Latest Metrics:</h3>
+              {metrics.map((metric) => (
+                <div key={metric} className="mb-1">
+                  {metric}: {data[data.length - 1][metric as keyof TimeSeriesData]}
+                </div>
+              ))}
+              <div className="text-sm mt-2">
+                Last updated: {new Date(data[data.length - 1].timestamp).toLocaleString()}
+              </div>
+            </div>
+          ) : (
+            <p>No data available</p>
+          )}
+        </div>
+      </div>
     </div>
   );
-}
+};
