@@ -1,11 +1,11 @@
 # AI Model Observability Dashboard
 
 
-# # Overview
+ # Overview
 This project provides a comprehensive AI Model Observability Dashboard to monitor, analyze, and visualize critical performance metrics for three AI models deployed on Azure Machine Learning. It combines automated metric calculation, real-time observability, and insights generation using Azure's cloud ecosystem.
 
 
-# # # Project Goals
+## Project Goals
 The primary purpose of this project is to measure and display the following key metrics for multiple AI models:
 
 Precision
@@ -17,10 +17,10 @@ Latency
 Additionally, it uses Azure OpenAI to analyze the collected metrics, generate insights, and provide recommendations for improving model performance.
 
 
-# # Architecture
+## Architecture
 The project follows a modular architecture using Azure services:
 
-# # # Model Deployment:
+Model Deployment:
 
 AI models (GPT-4o, LLaMA-3, and Phi-4) are deployed as Managed Online Endpoints using Azure Machine Learning Studio.
 Metric Calculation:
@@ -40,13 +40,13 @@ Visualization:
 
 A Power BI Embedded dashboard visualizes the metrics in an intuitive format.
 The dashboard is deployed as a Web App using Azure App Service for end-user access.
-# # # Key Features
+## Key Features
 Automated Monitoring: Real-time collection of key model performance metrics.
 Insights Generation: Integration with Azure OpenAI for meaningful analysis and actionable recommendations.
 Customizable Dashboard: Interactive visualizations powered by Power BI Embedded.
 Scalable Design: Support for multiple models with efficient querying and storage using Azure Data Explorer.
 Azure-Native Solution: Leverages Azure Machine Learning, Azure Monitor, Azure OpenAI, and App Service for seamless integration.
-# # # Tech Stack
+## Tech Stack
 Azure Machine Learning: Model deployment and pipelines for metric calculation.
 Azure Data Explorer (ADX): Metric storage and fast querying.
 Azure OpenAI Service: Generation of insights and recommendations.
