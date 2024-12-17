@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_WEBAPP_NAME: prototypeobservability-fcgyamhbg3evhbh7
+  AZURE_WEBAPP_NAME: prototypeObservability
   NODE_VERSION: '20.x'
 
 jobs:
