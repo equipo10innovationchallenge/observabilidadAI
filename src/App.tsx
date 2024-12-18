@@ -1,86 +1,136 @@
-import { useState } from 'react';
-import { ModelSelector } from './components/ModelSelector';
+import React, { useState } from 'react';
 import { MetricCard } from './components/MetricCard';
+import { MetricChart } from './components/MetricChart';
 import { AIInsights } from './components/AIInsights';
-import { models } from './types/metrics';
+import { ModelSelector } from './components/ModelSelector';
+import { LogViewer } from './components/LogViewer';
+import { Log } from './types/logs';
+import { models, TimeSeriesData } from './types/metrics';
+
+// Sample logs for demonstration
+const sampleLogs: Log[] = [
+  {
+    id: '1',
+    timestamp: new Date().toISOString(),
+    severity: 'error',
+    message: 'Failed to connect to database',
+    source: 'Database Service',
+    details: { error: 'Connection timeout', code: 'DB_001' }
+  },
+  {
+    id: '2',
+    timestamp: new Date(Date.now() - 5000).toISOString(),
+    severity: 'warning',
+    message: 'High memory usage detected',
+    source: 'System Monitor',
+    details: { usage: '85%', threshold: '80%' }
+  },
+  {
+    id: '3',
+    timestamp: new Date(Date.now() - 10000).toISOString(),
+    severity: 'info',
+    message: 'User authentication successful',
+    source: 'Auth Service'
+  },
+  {
+    id: '4',
+    timestamp: new Date(Date.now() - 15000).toISOString(),
+    severity: 'debug',
+    message: 'Cache invalidation completed',
+    source: 'Cache Service',
+    details: { itemsCleared: 150 }
+  }
+];
+
+function generateTimeSeriesData(baseValue: number, count: number = 24): TimeSeriesData[] {
+  return Array.from({ length: count }, (_, i) => {
+    const date = new Date();
+    date.setHours(date.getHours() - (count - i));
+    
+    return {
+      timestamp: date.toISOString(),
+      value: baseValue + (Math.random() * 0.1 - 0.05),
+    };
+  });
+}
 
 function App() {
-  const [selectedModelId, setSelectedModelId] = useState(models[0].id);
-  const selectedModel = models.find((m) => m.id === selectedModelId)!;
+  const [selectedModel, setSelectedModel] = useState<string>(models[0].id);
+  const currentModel = models.find(m => m.id === selectedModel) || models[0];
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 py-8">
+    <div className="min-h-screen bg-gray-100 p-8">
+      <div className="max-w-7xl mx-auto">
+        <h1 className="text-3xl font-bold text-gray-900 mb-8">
+          Model Observability Dashboard
+        </h1>
+
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">AI Model Observability Platform</h1>
-          <p className="text-gray-600">Real-time monitoring and analysis of AI model performance metrics</p>
+          <ModelSelector
+            selectedModel={selectedModel}
+            onModelChange={setSelectedModel}
+          />
         </div>
 
-        <ModelSelector
-          selectedModel={selectedModelId}
-          onModelChange={setSelectedModelId}
-        />
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <MetricCard
-            title="Precision"
-            value={selectedModel.metrics.precision * 100}
-            unit="%"
-            description="Accuracy of model predictions"
-            definition="Precision measures the proportion of positive identifications that were actually correct. A precision of 95% means that when the model predicts something as positive, it is correct 95% of the time."
-            history={selectedModel.metrics.history.precision}
+            title="Latency"
+            value={currentModel.metrics.latency}
+            unit="ms"
+            description="Average response time"
+            definition="Time taken to process and respond to requests"
+            history={currentModel.metrics.history.latency}
             color="#3b82f6"
           />
           <MetricCard
-            title="Consistency"
-            value={selectedModel.metrics.consistency * 100}
-            unit="%"
-            description="Stability of model outputs"
-            definition="Consistency evaluates how stable the model's outputs are when given similar inputs. Higher consistency indicates that the model produces similar results for similar queries, making it more reliable and predictable."
-            history={selectedModel.metrics.history.consistency}
+            title="Throughput"
+            value={currentModel.metrics.throughput}
+            unit="req/s"
+            description="Requests processed per second"
+            definition="Number of requests the model can handle per second"
+            history={currentModel.metrics.history.throughput}
             color="#10b981"
           />
           <MetricCard
-            title="F1 Score"
-            value={selectedModel.metrics.f1Score * 100}
+            title="Precision"
+            value={currentModel.metrics.precision * 100}
             unit="%"
-            description="Balanced measure of precision and recall"
-            definition="F1 Score is the harmonic mean of precision and recall, providing a single score that balances both metrics. It's particularly useful when you need a balanced measure of a model's accuracy, especially with imbalanced datasets."
-            history={selectedModel.metrics.history.f1Score}
-            color="#6366f1"
-          />
-          <MetricCard
-            title="Relevance"
-            value={selectedModel.metrics.relevance * 100}
-            unit="%"
-            description="Contextual accuracy of responses"
-            definition="Relevance measures how well the model's responses align with the context and intent of the input. It evaluates whether the outputs are not just accurate but also appropriate and useful for the given context."
-            history={selectedModel.metrics.history.relevance}
-            color="#8b5cf6"
-          />
-          <MetricCard
-            title="Throughput"
-            value={selectedModel.metrics.throughput}
-            unit="req/s"
-            description="Requests processed per second"
-            definition="Throughput represents the number of requests the model can process per second. This metric is crucial for understanding the model's processing capacity and scalability in production environments."
-            history={selectedModel.metrics.history.throughput}
-            color="#ec4899"
-          />
-          <MetricCard
-            title="Latency"
-            value={selectedModel.metrics.latency}
-            unit="ms"
-            description="Average response time"
-            definition="Latency measures the average time taken to process a request and return a response. Lower latency indicates better real-time performance and user experience. This includes both model inference time and any additional processing overhead."
-            history={selectedModel.metrics.history.latency}
+            description="Model accuracy score"
+            definition="Percentage of correct predictions among all predictions made"
+            history={currentModel.metrics.history.precision}
             color="#f59e0b"
+          />
+          <MetricCard
+            title="F1 Score"
+            value={currentModel.metrics.f1Score * 100}
+            unit="%"
+            description="Overall model performance"
+            definition="Harmonic mean of precision and recall"
+            history={currentModel.metrics.history.f1Score}
+            color="#6366f1"
           />
         </div>
 
-        <AIInsights model={selectedModel} />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+          <div className="bg-white rounded-lg shadow-lg p-6">
+            <h2 className="text-xl font-semibold mb-4">Latency Over Time</h2>
+            <MetricChart 
+              data={currentModel.metrics.history.latency}
+              color="#3b82f6"
+            />
+          </div>
+          <div className="bg-white rounded-lg shadow-lg p-6">
+            <h2 className="text-xl font-semibold mb-4">AI Insights</h2>
+            <AIInsights model={currentModel} />
+          </div>
+        </div>
+
+        <div className="mb-8">
+          <LogViewer logs={sampleLogs} />
+        </div>
       </div>
     </div>
   );
 }
+
 export default App;
