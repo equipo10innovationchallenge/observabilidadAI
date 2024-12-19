@@ -4,19 +4,17 @@ export interface TimeSeriesData {
 }
 
 export interface ModelMetrics {
-  precision: number;
-  consistency: number;
-  f1Score: number;
+  groundedness: number;
   relevance: number;
-  throughput: number;
-  latency: number;
+  coherence: number;
+  fluency: number;
+  similarity: number;
   history: {
-    precision: TimeSeriesData[];
-    consistency: TimeSeriesData[];
-    f1Score: TimeSeriesData[];
+    groundedness: TimeSeriesData[];
     relevance: TimeSeriesData[];
-    throughput: TimeSeriesData[];
-    latency: TimeSeriesData[];
+    coherence: TimeSeriesData[];
+    fluency: TimeSeriesData[];
+    similarity: TimeSeriesData[];
   };
 }
 
@@ -43,19 +41,17 @@ export const models: Model[] = [
     id: 'gpt4',
     name: 'GPT-4',
     metrics: {
-      precision: 0.95,
-      consistency: 0.92,
-      f1Score: 0.94,
-      relevance: 0.96,
-      throughput: 850,
-      latency: 250,
+      groundedness: 0.95,
+      relevance: 0.92,
+      coherence: 0.94,
+      fluency: 0.96,
+      similarity: 0.93,
       history: {
-        precision: generateTimeSeriesData(0.95),
-        consistency: generateTimeSeriesData(0.92),
-        f1Score: generateTimeSeriesData(0.94),
-        relevance: generateTimeSeriesData(0.96),
-        throughput: generateTimeSeriesData(850),
-        latency: generateTimeSeriesData(250),
+        groundedness: generateTimeSeriesData(0.95),
+        relevance: generateTimeSeriesData(0.92),
+        coherence: generateTimeSeriesData(0.94),
+        fluency: generateTimeSeriesData(0.96),
+        similarity: generateTimeSeriesData(0.93)
       },
     },
   },
@@ -63,19 +59,17 @@ export const models: Model[] = [
     id: 'llama',
     name: 'Llama-3.3-70B-Instruct',
     metrics: {
-      precision: 0.89,
-      consistency: 0.88,
-      f1Score: 0.90,
-      relevance: 0.92,
-      throughput: 920,
-      latency: 180,
+      groundedness: 0.89,
+      relevance: 0.88,
+      coherence: 0.90,
+      fluency: 0.92,
+      similarity: 0.87,
       history: {
-        precision: generateTimeSeriesData(0.89),
-        consistency: generateTimeSeriesData(0.88),
-        f1Score: generateTimeSeriesData(0.90),
-        relevance: generateTimeSeriesData(0.92),
-        throughput: generateTimeSeriesData(920),
-        latency: generateTimeSeriesData(180),
+        groundedness: generateTimeSeriesData(0.89),
+        relevance: generateTimeSeriesData(0.88),
+        coherence: generateTimeSeriesData(0.90),
+        fluency: generateTimeSeriesData(0.92),
+        similarity: generateTimeSeriesData(0.87)
       },
     },
   },
@@ -83,19 +77,17 @@ export const models: Model[] = [
     id: 'phi4',
     name: 'Phi-4',
     metrics: {
-      precision: 0.87,
-      consistency: 0.85,
-      f1Score: 0.88,
-      relevance: 0.89,
-      throughput: 1100,
-      latency: 150,
+      groundedness: 0.87,
+      relevance: 0.85,
+      coherence: 0.88,
+      fluency: 0.89,
+      similarity: 0.86,
       history: {
-        precision: generateTimeSeriesData(0.87),
-        consistency: generateTimeSeriesData(0.85),
-        f1Score: generateTimeSeriesData(0.88),
-        relevance: generateTimeSeriesData(0.89),
-        throughput: generateTimeSeriesData(1100),
-        latency: generateTimeSeriesData(150),
+        groundedness: generateTimeSeriesData(0.87),
+        relevance: generateTimeSeriesData(0.85),
+        coherence: generateTimeSeriesData(0.88),
+        fluency: generateTimeSeriesData(0.89),
+        similarity: generateTimeSeriesData(0.86)
       },
     },
   },
