@@ -49,9 +49,16 @@ function App() {
   return (
     <div className="min-h-screen bg-gray-100 p-8">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">
-          Model Observability Dashboard
-        </h1>
+        <div className="flex items-center gap-4 mb-8">
+          <img 
+            src="/logo-insight-lens.png"
+            alt="InsightLens Logo" 
+            className="h-10 w-10"
+          />
+          <h1 className="text-3xl font-bold text-gray-900">
+            InsightLens Dashboard
+          </h1>
+        </div>
 
         <div className="mb-8">
           <ModelSelector
