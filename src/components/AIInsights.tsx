@@ -10,20 +10,56 @@ function generateInsights(model: Model): string {
   const metrics = model.metrics;
   const insights = [];
 
-  if (metrics.precision > 0.9) {
-    insights.push(`${model.name} shows excellent precision (${(metrics.precision * 100).toFixed(1)}%), indicating highly accurate predictions.`);
+  // Groundedness insights
+  if (metrics.groundedness > 0.9) {
+    insights.push(`${model.name} demonstrates excellent factual accuracy (${(metrics.groundedness * 100).toFixed(1)}%), providing highly reliable information.`);
+  } else if (metrics.groundedness < 0.8) {
+    insights.push(`Factual accuracy could be improved (${(metrics.groundedness * 100).toFixed(1)}%), suggesting a need for better grounding in source material.`);
   }
 
-  if (metrics.latency < 200) {
-    insights.push(`Low latency of ${metrics.latency}ms suggests optimal performance for real-time applications.`);
+  // Relevance insights
+  if (metrics.relevance > 0.9) {
+    insights.push(`Responses are highly relevant (${(metrics.relevance * 100).toFixed(1)}%), showing strong query understanding.`);
+  } else if (metrics.relevance < 0.8) {
+    insights.push(`Response relevance (${(metrics.relevance * 100).toFixed(1)}%) could be enhanced to better address queries.`);
   }
 
-  if (metrics.throughput > 1000) {
-    insights.push(`High throughput of ${metrics.throughput} requests/second indicates strong scaling capabilities.`);
+  // Coherence insights
+  if (metrics.coherence > 0.9) {
+    insights.push(`Excellent logical coherence (${(metrics.coherence * 100).toFixed(1)}%) indicates well-structured responses.`);
+  } else if (metrics.coherence < 0.8) {
+    insights.push(`Coherence score (${(metrics.coherence * 100).toFixed(1)}%) suggests room for improvement in logical flow.`);
   }
 
-  if (metrics.consistency < 0.9) {
-    insights.push(`Consistency score of ${(metrics.consistency * 100).toFixed(1)}% suggests room for improvement in output stability.`);
+  // Fluency insights
+  if (metrics.fluency > 0.9) {
+    insights.push(`High fluency score (${(metrics.fluency * 100).toFixed(1)}%) shows natural language generation.`);
+  } else if (metrics.fluency < 0.8) {
+    insights.push(`Language fluency (${(metrics.fluency * 100).toFixed(1)}%) could be improved for more natural text.`);
+  }
+
+  // Similarity insights
+  if (metrics.similarity > 0.9) {
+    insights.push(`Strong output consistency (${(metrics.similarity * 100).toFixed(1)}%) across similar queries.`);
+  } else if (metrics.similarity < 0.8) {
+    insights.push(`Output consistency (${(metrics.similarity * 100).toFixed(1)}%) shows variation in similar contexts.`);
+  }
+
+  // Overall performance summary
+  const avgScore = (
+    metrics.groundedness +
+    metrics.relevance +
+    metrics.coherence +
+    metrics.fluency +
+    metrics.similarity
+  ) / 5;
+
+  if (avgScore > 0.9) {
+    insights.push(`Overall, ${model.name} is performing exceptionally well across all metrics.`);
+  } else if (avgScore > 0.8) {
+    insights.push(`${model.name} shows good overall performance with some areas for potential improvement.`);
+  } else {
+    insights.push(`There are several areas where ${model.name}'s performance could be enhanced.`);
   }
 
   return insights.join(' ');

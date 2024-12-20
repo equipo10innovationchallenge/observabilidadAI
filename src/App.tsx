@@ -42,18 +42,6 @@ const sampleLogs: Log[] = [
   }
 ];
 
-function generateTimeSeriesData(baseValue: number, count: number = 24): TimeSeriesData[] {
-  return Array.from({ length: count }, (_, i) => {
-    const date = new Date();
-    date.setHours(date.getHours() - (count - i));
-    
-    return {
-      timestamp: date.toISOString(),
-      value: baseValue + (Math.random() * 0.1 - 0.05),
-    };
-  });
-}
-
 function App() {
   const [selectedModel, setSelectedModel] = useState<string>(models[0].id);
   const currentModel = models.find(m => m.id === selectedModel) || models[0];
@@ -72,59 +60,68 @@ function App() {
           />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        {/* First Row - 3 cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
           <MetricCard
-            title="Latency"
-            value={currentModel.metrics.latency}
-            unit="ms"
-            description="Average response time"
-            definition="Time taken to process and respond to requests"
-            history={currentModel.metrics.history.latency}
+            title="Groundedness"
+            value={currentModel.metrics.groundedness * 100}
+            unit="%"
+            description="Factual accuracy and reliability"
+            definition="Measures how well the model's responses align with known facts and source material"
+            history={currentModel.metrics.history.groundedness}
             color="#3b82f6"
           />
           <MetricCard
-            title="Throughput"
-            value={currentModel.metrics.throughput}
-            unit="req/s"
-            description="Requests processed per second"
-            definition="Number of requests the model can handle per second"
-            history={currentModel.metrics.history.throughput}
+            title="Relevance"
+            value={currentModel.metrics.relevance * 100}
+            unit="%"
+            description="Response appropriateness"
+            definition="Evaluates how well the model's responses address the given queries"
+            history={currentModel.metrics.history.relevance}
             color="#10b981"
           />
           <MetricCard
-            title="Precision"
-            value={currentModel.metrics.precision * 100}
+            title="Coherence"
+            value={currentModel.metrics.coherence * 100}
             unit="%"
-            description="Model accuracy score"
-            definition="Percentage of correct predictions among all predictions made"
-            history={currentModel.metrics.history.precision}
+            description="Logical consistency"
+            definition="Measures the logical flow and consistency of the model's responses"
+            history={currentModel.metrics.history.coherence}
             color="#f59e0b"
-          />
-          <MetricCard
-            title="F1 Score"
-            value={currentModel.metrics.f1Score * 100}
-            unit="%"
-            description="Overall model performance"
-            definition="Harmonic mean of precision and recall"
-            history={currentModel.metrics.history.f1Score}
-            color="#6366f1"
           />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-          <div className="bg-white rounded-lg shadow-lg p-6">
-            <h2 className="text-xl font-semibold mb-4">Latency Over Time</h2>
-            <MetricChart 
-              data={currentModel.metrics.history.latency}
-              color="#3b82f6"
-            />
-          </div>
+        {/* Second Row - 2 cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <MetricCard
+            title="Fluency"
+            value={currentModel.metrics.fluency * 100}
+            unit="%"
+            description="Language quality"
+            definition="Assesses the grammatical correctness and natural flow of the text"
+            history={currentModel.metrics.history.fluency}
+            color="#6366f1"
+          />
+          <MetricCard
+            title="Similarity"
+            value={currentModel.metrics.similarity * 100}
+            unit="%"
+            description="Output consistency"
+            definition="Measures how consistent the model's outputs are across similar inputs"
+            history={currentModel.metrics.history.similarity}
+            color="#ec4899"
+          />
+        </div>
+
+        {/* AI Insights Row */}
+        <div className="mb-8">
           <div className="bg-white rounded-lg shadow-lg p-6">
             <h2 className="text-xl font-semibold mb-4">AI Insights</h2>
             <AIInsights model={currentModel} />
           </div>
         </div>
 
+        {/* Logs Row */}
         <div className="mb-8">
           <LogViewer logs={sampleLogs} />
         </div>
