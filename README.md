@@ -41,41 +41,7 @@ User Feedback Integration: Collects and analyzes user feedback to evaluate its e
 Real-Time Data Insights: Provides actionable insights based on logs and metrics collected from the model for performance optimization.
 Optimized Monitoring Tools: Uses Azure Monitor and Application Insights for continuous monitoring and in-depth analysis of system health.
 Scalable Deployment: Deployed on Azure App Service, ensuring the solution scales with the growth of model usage and data.
-Installation
-Prerequisites
-Azure account with access to Azure OpenAI, Azure Machine Learning, and Azure Blob Storage
-Node.js (v16 or later)
-TypeScript
-Vite
-Setup
-Clone the repository:
 
-bash
-Copiar código
-git clone https://github.com/yourusername/ai-model-monitoring-dashboard.git
-cd ai-model-monitoring-dashboard
-Install the dependencies:
-
-bash
-Copiar código
-npm install
-Set up Azure services:
-
-Deploy the AI model in Azure OpenAI and Azure Machine Learning.
-Configure Azure Blob Storage as a Data Lake to store logs and metrics.
-Set up Azure Monitor and Application Insights to track system health.
-Run the frontend locally:
-
-bash
-Copiar código
-npm run dev
-The application will be available at http://localhost:3000.
-
-## Deploy the application to Azure:
-
-Use Azure CLI or Azure Portal to deploy the app to Azure App Service.
-Usage
-After deployment, the dashboard will provide visualizations of the AI model’s performance, including key metrics, logs, and insights. Users can track the model's health, optimize its performance, and evaluate the impact of user feedback on model accuracy.
 
 ## Future Enhancements
 Advanced Feedback Features: Improve the system’s ability to process and use user feedback to further optimize model performance. We plan to integrate a component dedicated to clustering, categorizing and explain hallucinations sources and serve it to a intuitive User interface.
