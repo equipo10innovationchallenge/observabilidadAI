@@ -7,6 +7,8 @@ Overview
 
 This project provides a solution for monitoring and observing the performance of AI models deployed on Azure. The system collects key metrics, integrates user feedback, and visualizes insights through a dashboard interface. By leveraging various Azure services such as Azure OpenAI, Azure Machine Learning, Azure Blob Storage, Azure Monitor, and Application Insights, the system ensures continuous monitoring and optimization of model performance. The solution helps identify areas for improvement and provides actionable insights to enhance model efficiency and accuracy.
 
+## Demo
+
 ![isightlens](https://github.com/user-attachments/assets/1e81f3e6-6442-47c6-ada1-03ce046a000a)
 
 
