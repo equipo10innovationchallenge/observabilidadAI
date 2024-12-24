@@ -12,7 +12,8 @@ This project provides a solution for monitoring and observing the performance of
 
 https://github.com/user-attachments/assets/63224451-229c-4841-8a16-e44de8167264
 
-##Architecture
+## Architecture
+
 ![diagram-current](https://github.com/user-attachments/assets/79f5a0f7-2291-4c96-a6fd-cc22c76f212a)
 
 1. Chat Project Development
